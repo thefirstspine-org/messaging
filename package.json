@@ -29,6 +29,7 @@
     "@thefirstspine/auth-nest": "^2.5.4",
     "@thefirstspine/certificate-nest": "1.0.8",
     "@thefirstspine/logs-nest": "^8.1.4",
+    "appoptics-apm": "^10.2.2",
     "axios": "^1.8.2",
     "dotenv": "^16.4.7",
     "node-fetch": "^3.3.2",
