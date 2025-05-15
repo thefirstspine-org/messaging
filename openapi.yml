@@ -1,0 +1,50 @@
+openapi: 3.0.4
+info:
+  title: Messaging API - OpenAPI 3.0
+  version: 1.0.0
+externalDocs:
+  description: Find out more about Swagger
+  url: https://swagger.io
+servers:
+  - url: https://messaging.thefirstspine.fr
+paths:
+  /api:
+    post:
+      summary: Send messages to client
+      operationId: session
+      tags:
+        - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - to
+                - subject
+                - message
+              properties:
+                to:
+                  type: string
+                subject:
+                  type: string
+                message:
+                  type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  original:
+                    type: object
+                    properties:
+                      to:
+                        type: string
+                      subject:
+                        type: string
+                      message:
+                        type: string
