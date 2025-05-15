@@ -24,7 +24,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          repository: 'theirstspine-org/messaging'
+          repository: 'thefirstspine-org/messaging'
           path: 'tmp'
       - name: Run the "availability" command
         uses: thefirstspine-org/github-action-compass-metrics@master
