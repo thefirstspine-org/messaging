@@ -52,4 +52,4 @@ jobs:
           cache-to: type=gha,mode=max
       - name: Run thefirstspine-org/ansible image
         run: |
-          docker run --rm -v ./volume:/volume -e BRANCH=${GITHUB_REF#refs/*/} thefirstspine/ansible ansible-playbook -i /volume/conf/inventory.yaml /volume/playbooks/deploy-messaging.yaml
+          docker run --rm -v ./volume:/volume -e BRANCH=${GITHUB_REF#refs/*/} thefirstspine-org/ansible ansible-playbook -i /volume/conf/inventory.yaml /volume/playbooks/deploy-messaging.yaml
