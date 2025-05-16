@@ -47,7 +47,7 @@ jobs:
         with:
           context: .
           push: false
-          tags: thefirstspine/ansible
+          tags: thefirstspine-org/ansible
           cache-from: type=gha
           cache-to: type=gha,mode=max
       - name: Run thefirstspine-org/ansible image
