@@ -80,7 +80,7 @@ export class MessagingService {
   sendMessageToClient(to: number[]|'*', subject: string, message: any) {
     this.logService.info("Send message to client", { to, subject, message });
     let hadSentMessage: boolean = false;
-    const users: number[] = isArray(to) ? to : this.getAllUsers();
+    const users: number[] = to === '*' ? this.getAllUsers() : to;
     this.messagingUsers.forEach((messagingUser: IMessagingUser) => {
       if (
         users.includes(messagingUser.user) &&
