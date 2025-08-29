@@ -73,4 +73,12 @@ export class MessagingGateway implements OnGatewayConnection, OnGatewayDisconnec
     }));
   }
 
+  @SubscribeMessage('ping')
+  async ping(client: any, data: any) {
+    this.logsService.info(`ping sent`, data);
+    client.send(JSON.stringify({
+      ping: 'pong',
+    }));
+  }
+
 }
