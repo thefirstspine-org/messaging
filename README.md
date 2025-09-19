@@ -1,6 +1,6 @@
 # Messaging
 
-Simple realtime messaging system. Contains an API to send message through sockets, where clients can subscribe. It's lighter than Apache Kafka because we have simple needs here.
+Simple realtime messaging system. Contains an API to send message through sockets, where clients can subscribe.
 
 ## Installation
 
