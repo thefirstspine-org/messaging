@@ -52,7 +52,7 @@ export class MessagingGateway implements OnGatewayConnection, OnGatewayDisconnec
   @SubscribeMessage('subscribeToSubject')
   async subscribeToSubject(client: any, data: any) {
     this.logsService.info(`subscribeToSubject sent`, data);
-    await this.messagingService.subscribeToSubject(
+    this.messagingService.subscribeToSubject(
       client,
       data.subject,
     );
