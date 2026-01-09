@@ -176,7 +176,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y gh
       - name: Authenticate gh
-        run: echo "${{ secrets.registry_token }}" | gh messaging login --with-token
+        run: echo "${{ secrets.registry_token }}" | gh auth login --with-token
       - name: Prune images older than 3 hours
         env:
           OWNER: ${{ github.repository_owner }}
