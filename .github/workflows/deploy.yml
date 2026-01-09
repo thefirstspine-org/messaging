@@ -116,7 +116,7 @@ jobs:
         if: env.ENV == 'dev'
         run: |
           printf '%s\n' "${{ secrets.ansible_key_id_ansible_dev }}" > ./volume/keys/id_ansible
-          printf '%s\n' "${{ secrets.private_key_messaging_private_key_prod }}" > ./volume/keys/messaging-private.key
+          printf '%s\n' "${{ secrets.private_key_messaging_private_key_dev }}" > ./volume/keys/messaging-private.key
       - name: Ansible inventory builder (prod)
         if: env.ENV == 'prod'
         run: |
