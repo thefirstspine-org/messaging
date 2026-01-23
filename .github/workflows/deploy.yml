@@ -138,7 +138,7 @@ jobs:
                 docker_image: 'ghcr.io/${{ github.repository }}:${{ env.TAG }}'
                 # Container env
                 env: prod
-                auth_domain: 'prod.auth.thefirstspine.fr'
+                auth_domain: 'auth.thefirstspine.fr'
                 private_key: "{{ lookup('file', '/volume/keys/messaging-private.key') }}"
                 # Host settings
                 external_port: 8080
