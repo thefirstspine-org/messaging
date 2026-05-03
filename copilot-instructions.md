@@ -13,7 +13,7 @@ Key files
 - src/app.module.ts — registers controllers/providers
 - src/api/api.controller.ts — POST /api endpoint (SendMessageDto)
 - src/messaging/messaging.gateway.ts — websocket gateway, events: `login`, `subscribeToSubject`, `unsubscribeToSubject`, `ping`
-- src/messaging/messaging.service.ts — in-memory user registry and message delivery logic
+- src/messaging/messaging.service.ts — fast in-memory messaging core (Map/Set based) — handles multi-device users, subscriptions and efficient delivery
 
 HTTP API
 - POST /api
@@ -30,21 +30,23 @@ WebSocket protocol
 - Messages delivered to clients are JSON: { to, subject, message }
 - MessagingService sends only to users that are both targeted (or `*`) and subscribed to the subject.
 
-Auth & security
-- Uses @thefirstspine/auth-nest for JWT validation in gateway.
-- API-level CertificateGuard is available — enable it for production.
+Performance & recent optimizations
+- The messaging core was rewritten to use Map and Set structures (src/messaging/messaging.service.ts). Benefits:
+  - O(1) lookups for clients and subject subscribers instead of scanning arrays
+  - Supports multiple client connections per user (multi-device)
+  - Faster delivery path: recipients computed by intersecting subscriber sets with target user list
+  - Automatic client cleanup on send errors to prevent leaks
 
-Extending & contributing
-- Keep SendMessageDto validation in sync when changing API shape.
-- Use LogsService for structured logs (already injected).
-- MessagingService is in-memory; for clustering or persistence, replace storage with a shared store (Redis/pubsub) and ensure message de-dup and delivery semantics.
-- Add tests under `test/` and run `npm run test` / `npm run test:e2e`.
+Recommended scaling steps
+- For multi-process or multi-node setups, use a shared adapter (Redis pub/sub) so messages reach clients on other processes. Example: socket.io-redis or Nest's Redis adapter.
+- Use a process manager (PM2) or Node clustering with sticky sessions if keeping in-memory connections.
+- Prefer a socket adapter (Redis) + horizontal scaling rather than keeping single-process sockets.
+- Add metrics (Prometheus) and health endpoints; monitor connections, message rate, latency, and memory.
+- Run load tests (autocannon/wrk) to measure throughput and latency: `npx autocannon -c 1000 -d 30 ws://localhost:3000` and adjust pooling/GC accordingly.
 
-Notes
-- Configuration: dotenv is used; see the Ansible playbook and thefirstspine/configurator references in README to generate local .env
-- Socket client must send `login` with JWT before expecting messages targeted to its user id.
+Developer notes
+- Changed file: src/messaging/messaging.service.ts — review the Map/Set implementation when modifying subscription logic.
+- To add a Redis adapter and clustering, implement a pub/sub bridge: publish API messages to Redis channel; each node subscribes and sends to its local clients.
+- Add tests around subscribe/unsubscribe, multi-device delivery, and robust removal of disconnected clients.
 
-Example API request
-- curl -X POST https://messaging.example.com/api -H 'Content-Type: application/json' -d '{"to":"*","subject":"game:update","message":{"action":"move","x":1,"y":2}}'
-
-If anything in this file is unclear or needs more detail, ask and guidance will be added.
+If you want, add a PR skeleton that wires a Redis adapter and example clustering configuration; can implement that next.
