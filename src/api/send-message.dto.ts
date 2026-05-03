@@ -44,13 +44,13 @@ export function AllOrArrayOfNumbers( validationOptions?: ValidationOptions) {
 
 export class SendMessageDto {
   @AllOrArrayOfNumbers()
-  public to: '*' | number[];
+  public to: '*' | number[] = '*';
 
   @IsNotEmpty()
   @IsString()
-  public subject: string;
+  public subject: string = '';
 
   @IsNotEmpty()
   @IsObject()
-  public message: {[key: string]: string | number};
+  public message: {[key: string]: string | number} = {};
 }
