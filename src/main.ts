@@ -15,6 +15,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalFilters(new ErrorFilter(new LogsService()));
   app.use(RequestsLoggerMiddleware.use);
-  await app.listen(process.env.PORT);
+  const port = process.env.PORT ?? 3000;
+  await app.listen(port);
 }
 bootstrap();

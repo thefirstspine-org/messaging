@@ -35,3 +35,6 @@ lerna-debug.log*
 
 # Config
 .env
+
+# Typescript temporary build file
+tsconfig.tsbuildinfo
